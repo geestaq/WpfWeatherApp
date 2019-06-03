@@ -3,10 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:WpfWeatherApp.ViewModel"
+        xmlns:conv="clr-namespace:WpfWeatherApp.ViewModel.Converters"
         xmlns:local="clr-namespace:WpfWeatherApp.View"
         mc:Ignorable="d"
-        Title="WeatherWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="WeatherWindow" Height="450" Width="300">
+    <Window.Resources>
+        <vm:WeatherVM x:Key="vm"/>
+        <conv:CountToVisibilityConverter x:Key="countToVisibilityConverter"/>
+    </Window.Resources>
+    <StackPanel Margin="10"
+                DataContext="{StaticResource vm}">
+        <Button Command="{Binding RefreshCommand}"
+                CommandParameter="{Binding}">
+            Command Test
+        </Button>
+        <TextBox Text="{Binding CityQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <ListView ItemsSource="{Binding Cities}"
+                  SelectedItem="{Binding SelectedCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Visibility="{Binding Cities.Count, Converter={StaticResource countToVisibilityConverter}}"
+                  MaxHeight="100">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding LocalizedName}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock Text="{Binding SelectedCity.LocalizedName}"
+                   Margin="0 20 0 0"
+                   FontSize="20"
+                   FontWeight="Bold"/>
+        <ListView Margin="10"
+                  ItemsSource="{Binding Weather.DailyForecasts}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0 10">
+                        <TextBlock Text="{Binding Date, StringFormat='{}{0:m}'}"
+                                   FontSize="20"
+                                   FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Temperature.Minimum.Value}"
+                                        Margin="0 0 10 0"
+                                        FontSize="18"
+                                        FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Temperature.Maximum.Value}"
+                                        Margin="0 0 10 0"
+                                        FontSize="18"
+                                        FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
 </Window>

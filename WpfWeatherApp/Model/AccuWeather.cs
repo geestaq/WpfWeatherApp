@@ -1,77 +1,217 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WpfWeatherApp.Model
 {
-    public class Headline
+    public class Range : INotifyPropertyChanged
     {
-        public DateTime EffectiveDate { get; set; }
-        public int EffectiveEpochDate { get; set; }
-        public int Severity { get; set; }
-        public string Text { get; set; }
-        public string Category { get; set; }
-        public DateTime EndDate { get; set; }
-        public int EndEpochDate { get; set; }
-        public string MobileLink { get; set; }
-        public string Link { get; set; }
+        private double value;
+
+        public double Value
+        {
+            get { return value; }
+            set
+            {
+                this.value = value;
+                OnPropertyChanged("Value");
+            }
+        }
+
+        private string unit;
+
+        public string Unit
+        {
+            get { return unit; }
+            set
+            {
+                unit = value;
+                OnPropertyChanged("Unit");
+            }
+        }
+
+        private int unitType;
+
+        public int UnitType
+        {
+            get { return unitType; }
+            set
+            {
+                unitType = value;
+                OnPropertyChanged("UnitType");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
-    public class Minimum
+    public class Temperature : INotifyPropertyChanged
     {
-        public double Value { get; set; }
-        public string Unit { get; set; }
-        public int UnitType { get; set; }
+        private Range minimum;
+
+        public Range Minimum
+        {
+            get { return minimum; }
+            set
+            {
+                minimum = value;
+                OnPropertyChanged("Minimum");
+            }
+        }
+
+        private Range maximum;
+
+        public Range Maximum
+        {
+            get { return maximum; }
+            set
+            {
+                maximum = value;
+                OnPropertyChanged("Maximum");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
-    public class Maximum
+    public class TimeOfDay : INotifyPropertyChanged
     {
-        public double Value { get; set; }
-        public string Unit { get; set; }
-        public int UnitType { get; set; }
+        private int icon;
+
+        public int Icon
+        {
+            get { return icon; }
+            set
+            {
+                icon = value;
+                OnPropertyChanged("Icon");
+            }
+        }
+
+        private string iconPhrase;
+
+        public string IconPhrase
+        {
+            get { return iconPhrase; }
+            set
+            {
+                iconPhrase = value;
+                OnPropertyChanged("IconPhrase");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
-    public class Temperature
+    public class DailyForecast : INotifyPropertyChanged
     {
-        public Minimum Minimum { get; set; }
-        public Maximum Maximum { get; set; }
-    }
+        public List<string> Sources { get; set; }
 
-    public class Day
-    {
-        public int Icon { get; set; }
-        public string IconPhrase { get; set; }
-        public bool HasPrecipitation { get; set; }
-        public string PrecipitationType { get; set; }
-        public string PrecipitationIntensity { get; set; }
-    }
+        private DateTime date;
 
-    public class Night
-    {
-        public int Icon { get; set; }
-        public string IconPhrase { get; set; }
-        public bool HasPrecipitation { get; set; }
-    }
+        public DateTime Date
+        {
+            get { return date; }
+            set
+            {
+                date = value;
+                OnPropertyChanged("Date");
+            }
+        }
 
-    public class DailyForecast
-    {
-        public DateTime Date { get; set; }
-        public int EpochDate { get; set; }
-        public Temperature Temperature { get; set; }
-        public Day Day { get; set; }
-        public Night Night { get; set; }
-        public IList<string> Sources { get; set; }
-        public string MobileLink { get; set; }
-        public string Link { get; set; }
+        private Temperature temperature;
+
+        public Temperature Temperature
+        {
+            get { return temperature; }
+            set
+            {
+                temperature = value;
+                OnPropertyChanged("Temperature");
+            }
+        }
+
+        private TimeOfDay day;
+
+        public TimeOfDay Day
+        {
+            get { return day; }
+            set
+            {
+                day = value;
+                OnPropertyChanged("Day");
+            }
+        }
+
+        private TimeOfDay night;
+
+        public TimeOfDay Night
+        {
+            get { return night; }
+            set
+            {
+                night = value;
+                OnPropertyChanged("Night");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class AccuWeather
     {
-        public Headline Headline { get; set; }
-        public IList<DailyForecast> DailyForecasts { get; set; }
-    }
+        public ObservableCollection<DailyForecast> DailyForecasts { get; set; }
 
+        public AccuWeather()
+        {
+            DailyForecasts = new ObservableCollection<DailyForecast>();
+
+            /*
+            for (int i = 0; i < 3; i++)
+            {
+                DailyForecast dailyForecast = new DailyForecast
+                {
+                    Date = DateTime.Now.AddDays(i),
+                    Temperature = new Temperature
+                    {
+                        Maximum = new Range
+                        {
+                            Value = 21 + i
+                        },
+                        Minimum = new Range
+                        {
+                            Value = 5 - i
+                        }
+                    }
+                };
+                DailyForecasts.Add(dailyForecast);
+            }
+            */
+        }
+    }
 
 }

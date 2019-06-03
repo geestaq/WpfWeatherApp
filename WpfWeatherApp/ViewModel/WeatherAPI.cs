@@ -13,13 +13,14 @@ namespace WpfWeatherApp.ViewModel
     {
         public const string APIKEY = "Ga8WJcJRAkeFKEFslCgbEJtK5KuQcAl0";
         public const string BASEURL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/{cityCode}?apikey={apiKey}&language=pl&metric=true";
+        public const string BASEURL_AUTOCOMPLETE = "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey={apiKey}&q={query}&language=pl";
 
         /// <summary>
         /// Zwraca informacje o pogodzie dla podanego miasta
         /// </summary>
         /// <param name="cityName"></param>
         /// <returns></returns>
-        public async Task<AccuWeather> GetWeatherInformationAsync(string cityCode)
+        public static async Task<AccuWeather> GetWeatherInformationAsync(string cityCode)
         {
             AccuWeather result = new AccuWeather();
 
@@ -38,17 +39,28 @@ namespace WpfWeatherApp.ViewModel
             return result;
         }
 
-        /*
         /// <summary>
-        /// Zwraca kod miasta z API dla podanej nazwy
+        /// Zwraca informacje o wyszukanych miastach
         /// </summary>
-        /// <param name="cityName"></param>
+        /// <param name="query"></param>
         /// <returns></returns>
-        private int GetCityCode(string cityName)
+        public static async Task<List<City>> GetAutocompleteAsync(string query)
         {
-            //TODO - implementacja
-            return 275781; //zwraca kod dla Katowice
+            List<City> result = new List<City>();
+
+            string url = BASEURL_AUTOCOMPLETE
+                .Replace("{query}", query)
+                .Replace("{apiKey}", APIKEY);
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.GetAsync(url);
+                string json = await response.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<List<City>>(json);
+            }
+
+            return result;
         }
-        */
     }
 }
