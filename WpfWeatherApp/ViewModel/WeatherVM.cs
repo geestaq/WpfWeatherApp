@@ -53,32 +53,32 @@ namespace WpfWeatherApp.ViewModel
 
         private async void GetCities()
         {
-            //var cities = await WeatherAPI.GetAutocompleteAsync(CityQuery);
+            var cities = await WeatherAPI.GetAutocompleteAsync(CityQuery);
             
-            var cities = new List<City>
-            {
-                new City()
-                {
-                    AdministrativeArea = new Area(),
-                    Country = new Area(),
-                    Key = "111",
-                    LocalizedName = "Testowe miasto 1, Zimbabwe"
-                },
-                new City()
-                {
-                    AdministrativeArea = new Area(),
-                    Country = new Area(),
-                    Key = "111",
-                    LocalizedName = "Testowe miasto 2, Zimbabwe"
-                },
-                new City()
-                {
-                    AdministrativeArea = new Area(),
-                    Country = new Area(),
-                    Key = "111",
-                    LocalizedName = "Testowe miasto 3, Zimbabwe"
-                }
-            };
+            //var cities = new List<City>
+            //{
+            //    new City()
+            //    {
+            //        AdministrativeArea = new Area(),
+            //        Country = new Area(),
+            //        Key = "111",
+            //        LocalizedName = "Testowe miasto 1, Zimbabwe"
+            //    },
+            //    new City()
+            //    {
+            //        AdministrativeArea = new Area(),
+            //        Country = new Area(),
+            //        Key = "111",
+            //        LocalizedName = "Testowe miasto 2, Zimbabwe"
+            //    },
+            //    new City()
+            //    {
+            //        AdministrativeArea = new Area(),
+            //        Country = new Area(),
+            //        Key = "111",
+            //        LocalizedName = "Testowe miasto 3, Zimbabwe"
+            //    }
+            //};
             
 
             Cities.Clear();
@@ -90,7 +90,7 @@ namespace WpfWeatherApp.ViewModel
 
         public async void GetWeather()
         {
-            if(selectedCity.Key != null)
+            if(SelectedCity.Key != null)
             {
                 var weather = await WeatherAPI.GetWeatherInformationAsync(SelectedCity.Key);
 

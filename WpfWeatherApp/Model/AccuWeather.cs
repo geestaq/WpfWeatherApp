@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 this.value = value;
-                OnPropertyChanged("Value");
+                OnPropertyChanged();
             }
         }
 
@@ -30,7 +31,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 unit = value;
-                OnPropertyChanged("Unit");
+                OnPropertyChanged();
             }
         }
 
@@ -42,13 +43,13 @@ namespace WpfWeatherApp.Model
             set
             {
                 unitType = value;
-                OnPropertyChanged("UnitType");
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -64,7 +65,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 minimum = value;
-                OnPropertyChanged("Minimum");
+                OnPropertyChanged();
             }
         }
 
@@ -76,13 +77,13 @@ namespace WpfWeatherApp.Model
             set
             {
                 maximum = value;
-                OnPropertyChanged("Maximum");
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -98,7 +99,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 icon = value;
-                OnPropertyChanged("Icon");
+                OnPropertyChanged();
             }
         }
 
@@ -110,13 +111,13 @@ namespace WpfWeatherApp.Model
             set
             {
                 iconPhrase = value;
-                OnPropertyChanged("IconPhrase");
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -134,7 +135,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 date = value;
-                OnPropertyChanged("Date");
+                OnPropertyChanged();
             }
         }
 
@@ -146,7 +147,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 temperature = value;
-                OnPropertyChanged("Temperature");
+                OnPropertyChanged();
             }
         }
 
@@ -158,7 +159,7 @@ namespace WpfWeatherApp.Model
             set
             {
                 day = value;
-                OnPropertyChanged("Day");
+                OnPropertyChanged();
             }
         }
 
@@ -170,13 +171,13 @@ namespace WpfWeatherApp.Model
             set
             {
                 night = value;
-                OnPropertyChanged("Night");
+                OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
