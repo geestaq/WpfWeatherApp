@@ -18,8 +18,11 @@ namespace WpfWeatherApp.Model
             get { return value; }
             set
             {
-                this.value = value;
-                OnPropertyChanged();
+                if(value != this.value)
+                {
+                    this.value = value;
+                    OnPropertyChanged();
+                }
             }
         }
 

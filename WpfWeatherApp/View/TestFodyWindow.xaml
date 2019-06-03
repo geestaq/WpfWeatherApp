@@ -1,0 +1,23 @@
+﻿<Window x:Class="WpfWeatherApp.View.TestFodyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfWeatherApp.View"
+        xmlns:vm="clr-namespace:WpfWeatherApp.ViewModel"
+        mc:Ignorable="d"
+        Title="TestFodyWindow" Height="450" Width="400">
+    <Window.Resources>
+        <vm:TestFodyVM x:Key="vm"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource vm}">
+        <StackPanel>
+            <TextBlock Text="{Binding TestModel.FamilyName}"/>
+            <TextBlock Text="{Binding TestModel.GivenNames}"/>
+            <TextBlock Text="{Binding TestModel.FullName}"/>
+            <TextBox Text="{Binding TestModel.FamilyName}"/>
+            <TextBox Text="{Binding TestModel.GivenNames}"/>
+            <Button Command="{Binding UpdateCommand}">Test runtime</Button>
+        </StackPanel>
+    </Grid>
+</Window>
